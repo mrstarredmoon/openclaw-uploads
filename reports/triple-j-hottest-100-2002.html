@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triple J Hottest 100 of 2002</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
+        }
+        .header h1 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            text-shadow: 0 0 30px rgba(102, 126, 234, 0.5);
+        }
+        .subtitle { color: #a0a0a0; font-size: 1.1em; margin-bottom: 25px; }
+        .meta {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;
+            color: #888; font-size: 0.95em;
+        }
+        .meta-item {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+        }
+        .winner-box {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .winner-box h2 { color: #ffd700; font-size: 1.8em; margin-bottom: 10px; }
+        .winner-box .song { font-size: 2em; color: #fff; margin: 15px 0; }
+        .winner-box .artist { font-size: 1.3em; color: #a5b4fc; }
+        .song-list { display: grid; gap: 8px; }
+        .song-item {
+            display: flex; align-items: center; padding: 12px 15px;
+            background: rgba(0, 0, 0, 0.2); border-radius: 10px;
+            transition: transform 0.2s, background 0.2s;
+        }
+        .song-item:hover { transform: translateX(5px); background: rgba(102, 126, 234, 0.1); }
+        .song-item.top-10 {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+            border-left: 3px solid #ffd700;
+        }
+        .song-item.top-5 {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+        }
+        .rank {
+            min-width: 40px; height: 40px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: bold; font-size: 0.95em; margin-right: 15px; flex-shrink: 0;
+        }
+        .song-item.top-10 .rank {
+            background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+            color: #1a1a2e;
+        }
+        .song-item:not(.top-10) .rank {
+            background: rgba(102, 126, 234, 0.3);
+            color: #a5b4fc;
+        }
+        .song-info { flex: 1; min-width: 0; }
+        .song-title { font-size: 1em; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .song-artist { font-size: 0.85em; color: #888; }
+        .country-tag {
+            padding: 3px 10px; border-radius: 12px; font-size: 0.7em;
+            margin-left: 10px; flex-shrink: 0;
+        }
+        .country-au { background: rgba(34, 197, 94, 0.2); color: #4ade80; }
+        .country-us { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+        .country-uk { background: rgba(236, 72, 153, 0.2); color: #f9a8d4; }
+        .country-other { background: rgba(139, 92, 246, 0.2); color: #a78bfa; }
+        .stats-section {
+            margin-top: 40px; padding-top: 30px;
+            border-top: 1px solid rgba(102, 126, 234, 0.3);
+        }
+        .stats-section h3 { color: #667eea; margin-bottom: 20px; text-align: center; }
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px; margin-bottom: 30px;
+        }
+        .stat-box {
+            background: rgba(0, 0, 0, 0.2); padding: 15px;
+            border-radius: 12px; text-align: center;
+        }
+        .stat-number { font-size: 1.8em; font-weight: bold; color: #667eea; }
+        .stat-label { font-size: 0.85em; color: #888; }
+        .multi-entry-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .multi-entry-table th, .multi-entry-table td {
+            padding: 10px; text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .multi-entry-table th { color: #a78bfa; font-weight: 600; }
+        .multi-entry-table tr:hover { background: rgba(102, 126, 234, 0.1); }
+        .footer {
+            text-align: center; margin-top: 40px; padding-top: 20px;
+            border-top: 1px solid rgba(102, 126, 234, 0.3);
+            color: #666; font-size: 0.85em;
+        }
+        .fun-fact {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9em;
+            color: #c4b5fd;
+        }
+        .fun-fact strong { color: #a78bfa; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎵 Triple J Hottest 100 of 2002</h1>
+            <p class="subtitle">The tenth annual countdown • Announced 26 January 2003</p>
+            <div class="meta">
+                <span class="meta-item"><strong>Winner:</strong> Queens of the Stone Age</span>
+                <span class="meta-item"><strong>Total Songs:</strong> 100</span>
+                <span class="meta-item"><strong>Australian Artists:</strong> 50 entries</span>
+            </div>
+        </div>
+
+        <div class="winner-box">
+            <h2>🏆 #1 Song of 2002</h2>
+            <div class="song">"No One Knows"</div>
+            <div class="artist">Queens of the Stone Age 🇺🇸</div>
+        </div>
+
+        <div class="fun-fact">
+            <strong>🎸 Record Breaker:</strong> Dave Grohl appeared <strong>10 times</strong> in this countdown (with Queens of the Stone Age, Foo Fighters, and Nirvana) — setting the record for most appearances in a single Hottest 100!
+        </div>
+
+        <div class="song-list">
+            <div class="song-item top-10 top-5"><span class="rank">1</span><div class="song-info"><div class="song-title">No One Knows</div><div class="song-artist">Queens of the Stone Age</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item top-10 top-5"><span class="rank">2</span><div class="song-info"><div class="song-title">Chemical Heart</div><div class="song-artist">Grinspoon</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item top-10 top-5"><span class="rank">3</span><div class="song-info"><div class="song-title">London Still</div><div class="song-artist">The Waifs</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item top-10 top-5"><span class="rank">4</span><div class="song-info"><div class="song-title">Karma</div><div class="song-artist">1200 Techniques</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item top-10 top-5"><span class="rank">5</span><div class="song-info"><div class="song-title">Get Free</div><div class="song-artist">The Vines</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item top-10"><span class="rank">6</span><div class="song-info"><div class="song-title">Rollercoaster</div><div class="song-artist">Machine Gun Fellatio</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item top-10"><span class="rank">7</span><div class="song-info"><div class="song-title">Lose Yourself</div><div class="song-artist">Eminem</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item top-10"><span class="rank">8</span><div class="song-info"><div class="song-title">Pussytown</div><div class="song-artist">Machine Gun Fellatio</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item top-10"><span class="rank">9</span><div class="song-info"><div class="song-title">By the Way</div><div class="song-artist">Red Hot Chili Peppers</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item top-10"><span class="rank">10</span><div class="song-info"><div class="song-title">The Greatest View</div><div class="song-artist">Silverchair</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">11</span><div class="song-info"><div class="song-title">The One</div><div class="song-artist">Foo Fighters</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">12</span><div class="song-info"><div class="song-title">You Know You're Right</div><div class="song-artist">Nirvana</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">13</span><div class="song-info"><div class="song-title">All My Life</div><div class="song-artist">Foo Fighters</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">14</span><div class="song-info"><div class="song-title">Lost Control</div><div class="song-artist">Grinspoon</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">15</span><div class="song-info"><div class="song-title">No Reason</div><div class="song-artist">Grinspoon</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">16</span><div class="song-info"><div class="song-title">The Zephyr Song</div><div class="song-artist">Red Hot Chili Peppers</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">17</span><div class="song-info"><div class="song-title">Without Me</div><div class="song-artist">Eminem</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">18</span><div class="song-info"><div class="song-title">Toxicity</div><div class="song-artist">System of a Down</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">19</span><div class="song-info"><div class="song-title">Highly Evolved</div><div class="song-artist">The Vines</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">20</span><div class="song-info"><div class="song-title">Cochise</div><div class="song-artist">Audioslave</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">21</span><div class="song-info"><div class="song-title">Outtathaway!</div><div class="song-artist">The Vines</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">22</span><div class="song-info"><div class="song-title">Something Borrowed, Something Blue</div><div class="song-artist">Ben Lee</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">23</span><div class="song-info"><div class="song-title">Times Like These</div><div class="song-artist">Foo Fighters</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">24</span><div class="song-info"><div class="song-title">Keep Fishin'</div><div class="song-artist">Weezer</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">25</span><div class="song-info"><div class="song-title">Without You</div><div class="song-artist">Silverchair</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">26</span><div class="song-info"><div class="song-title">6.66</div><div class="song-artist">Salmon Hater</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">27</span><div class="song-info"><div class="song-title">Home Is Where the Heart Is</div><div class="song-artist">John Butler Trio</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">28</span><div class="song-info"><div class="song-title">I Am Mine</div><div class="song-artist">Pearl Jam</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">29</span><div class="song-info"><div class="song-title">Carry On</div><div class="song-artist">Motor Ace</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">30</span><div class="song-info"><div class="song-title">Ms. Jackson</div><div class="song-artist">The Vines</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">31</span><div class="song-info"><div class="song-title">One in a Million</div><div class="song-artist">Bodyjar</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">32</span><div class="song-info"><div class="song-title">Release</div><div class="song-artist">George</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">33</span><div class="song-info"><div class="song-title">Hate to Say I Told You So</div><div class="song-artist">The Hives</div></div><span class="country-tag country-other">🇸🇪 SE</span></div>
+            <div class="song-item"><span class="rank">34</span><div class="song-info"><div class="song-title">Comfort Me</div><div class="song-artist">Pacifier</div></div><span class="country-tag country-other">🇳🇿 NZ</span></div>
+            <div class="song-item"><span class="rank">35</span><div class="song-info"><div class="song-title">Luv Your Life</div><div class="song-artist">Silverchair</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">36</span><div class="song-info"><div class="song-title">Here Comes September</div><div class="song-artist">Waikiki</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">37</span><div class="song-info"><div class="song-title">Aerials</div><div class="song-artist">System of a Down</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">38</span><div class="song-info"><div class="song-title">The Bold and the Beautiful</div><div class="song-artist">The Drugs</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">39</span><div class="song-info"><div class="song-title">In My Place</div><div class="song-artist">Coldplay</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">40</span><div class="song-info"><div class="song-title">Fall for You</div><div class="song-artist">The Whitlams</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">41</span><div class="song-info"><div class="song-title">What's the Deal?</div><div class="song-artist">28 Days</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">42</span><div class="song-info"><div class="song-title">Don't Mug Yourself</div><div class="song-artist">The Streets</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">43</span><div class="song-info"><div class="song-title">Breaking it Slowly</div><div class="song-artist">George</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">44</span><div class="song-info"><div class="song-title">God Is in the Radio</div><div class="song-artist">Queens of the Stone Age</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">45</span><div class="song-info"><div class="song-title">Punk's Not Dead</div><div class="song-artist">Darren Hanlon</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">46</span><div class="song-info"><div class="song-title">Rock Star</div><div class="song-artist">N.E.R.D</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">47</span><div class="song-info"><div class="song-title">1000 Miles</div><div class="song-artist">Grinspoon</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">48</span><div class="song-info"><div class="song-title">Go with the Flow</div><div class="song-artist">Queens of the Stone Age</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">49</span><div class="song-info"><div class="song-title">What's Golden</div><div class="song-artist">Jurassic 5</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">50</span><div class="song-info"><div class="song-title">You Give Me Something</div><div class="song-artist">Jamiroquai</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">51</span><div class="song-info"><div class="song-title">Down River</div><div class="song-artist">The Wilcannia Mob</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">52</span><div class="song-info"><div class="song-title">One Said to the Other</div><div class="song-artist">The Living End</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">53</span><div class="song-info"><div class="song-title">Get Me Off</div><div class="song-artist">Basement Jaxx</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">54</span><div class="song-info"><div class="song-title">Do It with Madonna</div><div class="song-artist">The Androids</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">55</span><div class="song-info"><div class="song-title">Disenchanted Lullaby</div><div class="song-artist">Foo Fighters</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">56</span><div class="song-info"><div class="song-title">First It Giveth</div><div class="song-artist">Queens of the Stone Age</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">57</span><div class="song-info"><div class="song-title">Love Foolosophy</div><div class="song-artist">Jamiroquai</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">58</span><div class="song-info"><div class="song-title">Hitting the Ground</div><div class="song-artist">PJ Harvey & Gordon Gano</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">59</span><div class="song-info"><div class="song-title">Take It Slow</div><div class="song-artist">Machine Gun Fellatio</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">60</span><div class="song-info"><div class="song-title">A Little Less Conversation</div><div class="song-artist">JXL vs. Elvis Presley</div></div><span class="country-tag country-other">🇳🇱 NL</span></div>
+            <div class="song-item"><span class="rank">61</span><div class="song-info"><div class="song-title">We Are All Made of Stars</div><div class="song-artist">Moby</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">62</span><div class="song-info"><div class="song-title">Across the Night</div><div class="song-artist">Silverchair</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">63</span><div class="song-info"><div class="song-title">Say Something</div><div class="song-artist">Something for Kate</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">64</span><div class="song-info"><div class="song-title">Shot Shot</div><div class="song-artist">Gomez</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">65</span><div class="song-info"><div class="song-title">Nobody Likes a Bogan</div><div class="song-artist">Area-7</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">66</span><div class="song-info"><div class="song-title">This Train Will Be Taking No Passengers</div><div class="song-artist">Augie March</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">67</span><div class="song-info"><div class="song-title">New Technology</div><div class="song-artist">Waikiki</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">68</span><div class="song-info"><div class="song-title">Whatever Happened to My Rock 'n' Roll</div><div class="song-artist">Black Rebel Motorcycle Club</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">69</span><div class="song-info"><div class="song-title">Clocks</div><div class="song-artist">Coldplay</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">70</span><div class="song-info"><div class="song-title">Bucket Bong</div><div class="song-artist">Frenzal Rhomb</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">71</span><div class="song-info"><div class="song-title">Do Your Thing</div><div class="song-artist">Basement Jaxx</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">72</span><div class="song-info"><div class="song-title">Show Me How to Live</div><div class="song-artist">Audioslave</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">73</span><div class="song-info"><div class="song-title">Dope Nose</div><div class="song-artist">Weezer</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">74</span><div class="song-info"><div class="song-title">I'm a DJ</div><div class="song-artist">Sonic Animation</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">75</span><div class="song-info"><div class="song-title">Dy-Na-Mi-Tee</div><div class="song-artist">Ms. Dynamite</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">76</span><div class="song-info"><div class="song-title">World Upon Your Shoulders</div><div class="song-artist">Silverchair</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">77</span><div class="song-info"><div class="song-title">Has It Come to This?</div><div class="song-artist">The Streets</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">78</span><div class="song-info"><div class="song-title">Something to Talk About</div><div class="song-artist">Badly Drawn Boy</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">79</span><div class="song-info"><div class="song-title">Who Put the Devil in You</div><div class="song-artist">You Am I</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">80</span><div class="song-info"><div class="song-title">Highway One</div><div class="song-artist">The Waifs</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">81</span><div class="song-info"><div class="song-title">You Think I Ain't Worth a Dollar...</div><div class="song-artist">Queens of the Stone Age</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">82</span><div class="song-info"><div class="song-title">Strawberry Fields Forever</div><div class="song-artist">Ben Harper</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">83</span><div class="song-info"><div class="song-title">Take Me Away</div><div class="song-artist">28 Days</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">84</span><div class="song-info"><div class="song-title">Little by Little</div><div class="song-artist">Oasis</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">85</span><div class="song-info"><div class="song-title">Star Guitar</div><div class="song-artist">The Chemical Brothers</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">86</span><div class="song-info"><div class="song-title">Cleanin' Out My Closet</div><div class="song-artist">Eminem</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">87</span><div class="song-info"><div class="song-title">Innervision</div><div class="song-artist">System of a Down</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">88</span><div class="song-info"><div class="song-title">Everything's Gone Bad</div><div class="song-artist">The Fergusons</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">89</span><div class="song-info"><div class="song-title">Purple Haze</div><div class="song-artist">Groove Armada</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">90</span><div class="song-info"><div class="song-title">Silent Sigh</div><div class="song-artist">Badly Drawn Boy</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+            <div class="song-item"><span class="rank">91</span><div class="song-info"><div class="song-title">Being Followed</div><div class="song-artist">Rocket Science</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">92</span><div class="song-info"><div class="song-title">Called</div><div class="song-artist">Antiskeptic</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">93</span><div class="song-info"><div class="song-title">A Sorta Fairytale</div><div class="song-artist">Tori Amos</div></div><span class="country-tag country-us">🇺🇸 US</span></div>
+            <div class="song-item"><span class="rank">94</span><div class="song-info"><div class="song-title">Arse Huggin' Pants</div><div class="song-artist">Spiderbait</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">95</span><div class="song-info"><div class="song-title">She Wears a Mask</div><div class="song-artist">Machine Translations</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">96</span><div class="song-info"><div class="song-title">Lies</div><div class="song-artist">The Waifs</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">97</span><div class="song-info"><div class="song-title">Electrical Storm</div><div class="song-artist">U2</div></div><span class="country-tag country-other">🇮🇪 IE</span></div>
+            <div class="song-item"><span class="rank">98</span><div class="song-info"><div class="song-title">Shock (Living Without You)</div><div class="song-artist">Cartman</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">99</span><div class="song-info"><div class="song-title">Too Drunk to Drive</div><div class="song-artist">Bodyjar</div></div><span class="country-tag country-au">🇦🇺 AU</span></div>
+            <div class="song-item"><span class="rank">100</span><div class="song-info"><div class="song-title">A Rush of Blood to the Head</div><div class="song-artist">Coldplay</div></div><span class="country-tag country-uk">🇬🇧 UK</span></div>
+        </div>
+
+        <div class="stats-section">
+            <h3>🎸 Artists with Most Entries</h3>
+            <table class="multi-entry-table">
+                <tr><th>Entries</th><th>Artist</th><th>Positions</th></tr>
+                <tr><td>10</td><td>Dave Grohl (QOTSA/Foo Fighters/Nirvana)</td><td>1, 11, 12, 13, 23, 44, 48, 55, 56, 81</td></tr>
+                <tr><td>5</td><td>Queens of the Stone Age</td><td>1, 44, 48, 56, 81</td></tr>
+                <tr><td>5</td><td>Silverchair</td><td>10, 25, 35, 62, 76</td></tr>
+                <tr><td>4</td><td>Grinspoon</td><td>2, 14, 15, 47</td></tr>
+                <tr><td>4</td><td>The Vines</td><td>5, 19, 21, 30</td></tr>
+                <tr><td>4</td><td>Foo Fighters</td><td>11, 13, 23, 55</td></tr>
+                <tr><td>3</td><td>Coldplay</td><td>39, 69, 100</td></tr>
+                <tr><td>3</td><td>System of a Down</td><td>18, 37, 87</td></tr>
+            </table>
+
+            <h3 style="margin-top: 30px;">🌍 Countries Represented</h3>
+            <div class="stats-grid">
+                <div class="stat-box"><div class="stat-number">50</div><div class="stat-label">🇦🇺 Australia</div></div>
+                <div class="stat-box"><div class="stat-number">31</div><div class="stat-label">🇺🇸 United States</div></div>
+                <div class="stat-box"><div class="stat-number">17</div><div class="stat-label">🇬🇧 United Kingdom</div></div>
+                <div class="stat-box"><div class="stat-number">2</div><div class="stat-label">Other Countries</div></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Source: <a href="https://en.wikipedia.org/wiki/Triple_J_Hottest_100,_2002" style="color: #667eea;">Wikipedia</a></p>
+            <p style="margin-top: 10px;">Triple J Hottest 100 • 10th Annual Countdown</p>
+        </div>
+    </div>
+</body>
+</html>
